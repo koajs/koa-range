@@ -1,5 +1,5 @@
 
-koa-range
+koa-range [![Build Status](https://travis-ci.org/yorkie/koa-range.svg?branch=master)](https://travis-ci.org/yorkie/koa-range)
 =================
 range request implementation for koa
 
