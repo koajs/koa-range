@@ -43,7 +43,7 @@ describe('range requests', function() {
     .end(done);
   });
 
-  it('should return 200 without range', function(done) {
+  it('should return 416 without range', function(done) {
     request(app.listen())
     .get('/')
     .expect('Accept-Range', 'bytes')
