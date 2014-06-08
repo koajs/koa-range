@@ -1,0 +1,32 @@
+{
+  "name": "koa-range",
+  "version": "0.0.1",
+  "description": "range request implementation for koa",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:yorkie/koa-range.git"
+  },
+  "keywords": [
+    "range",
+    "koa",
+    "http"
+  ],
+  "author": "Yorkie Neil <yorkiefixer@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yorkie/koa-range/issues"
+  },
+  "homepage": "https://github.com/yorkie/koa-range",
+  "devDependencies": {
+    "koa": "^0.7.0",
+    "koa-route": "^1.1.4",
+    "make-lint": "^1.0.1",
+    "mocha": "^1.20.1",
+    "should": "^4.0.1",
+    "supertest": "^0.13.0"
+  }
+}
