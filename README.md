@@ -33,7 +33,7 @@ app.use(route.get('/json', function * () {
 }));
 
 // via readable stream
-app.use(route.get('/json', function * () {
+app.use(route.get('/stream', function * () {
   this.body = fs.createReadStream('your path');
 }));
 
