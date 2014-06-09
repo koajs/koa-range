@@ -1,6 +1,6 @@
 
 var util = require('util');
-var slice = require('./slice').slice;
+var slice = require('stream-slice').slice;
 var Stream = require('stream');
 
 module.exports = function * (next) {
