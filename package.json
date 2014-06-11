@@ -1,6 +1,6 @@
 {
   "name": "koa-range",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "range request implementation for koa",
   "main": "index.js",
   "scripts": {
