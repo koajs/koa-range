@@ -3,6 +3,10 @@ koa-range [![Build Status](https://travis-ci.org/yorkie/koa-range.svg?branch=mas
 =================
 range request implementation for koa
 
+[![Build Status](https://travis-ci.org/MangroveTech/koa-range.svg)](https://travis-ci.org/MangroveTech/koa-range)
+
+[![NPM](https://nodei.co/npm/koa-range.png?stars&downloads)](https://nodei.co/npm/koa-range/) [![NPM](https://nodei.co/npm-dl/koa-range.png)](https://nodei.co/npm/koa-range/)
+
 ### Installation
 
 ```sh
