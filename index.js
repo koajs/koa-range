@@ -4,10 +4,14 @@ var slice = require('stream-slice').slice;
 var Stream = require('stream');
 
 module.exports = function * (next) {
-  var subranges = [];
   var range = this.header['range'];
-  var ranges = range && rangeParse(range);
   this.set('Accept-Range', 'bytes');
+
+  if (!range) {
+    return yield * next;
+  }
+
+  var ranges = rangeParse(range);
 
   if (!ranges || ranges.length == 0) {
     this.status = 416;
@@ -22,7 +26,7 @@ module.exports = function * (next) {
   if (this.method != 'GET') {
     return;
   }
-  
+
   yield * next;
 
   var first = ranges[0];
