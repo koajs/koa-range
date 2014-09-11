@@ -22,8 +22,20 @@ app.on('error', function(err) {
   throw err;
 });
 
+describe('normal requests', function() {
+
+  it('should return 200 without range', function(done) {
+    request(app.listen())
+    .get('/')
+    .expect('Accept-Range', 'bytes')
+    .expect(200)
+    .end(done);
+  });
+
+});
+
 describe('range requests', function() {
-  
+
   it('should return 206 with partial content', function(done) {
     request(app.listen())
     .get('/')
@@ -53,18 +65,10 @@ describe('range requests', function() {
     .end(done);
   });
 
-  it('should return 416 without range', function(done) {
-    request(app.listen())
-    .get('/')
-    .expect('Accept-Range', 'bytes')
-    .expect(416)
-    .end(done);
-  });
-
 });
 
 describe('range requests with stream', function() {
-  
+
   it('should return 206 with partial content', function(done) {
     request(app.listen())
     .get('/stream')
