@@ -27,7 +27,7 @@ describe('normal requests', function() {
   it('should return 200 without range', function(done) {
     request(app.listen())
     .get('/')
-    .expect('Accept-Range', 'bytes')
+    .expect('Accept-Ranges', 'bytes')
     .expect(200)
     .end(done);
   });
@@ -41,8 +41,8 @@ describe('range requests', function() {
     .get('/')
     .set('range', 'bytes=0-300')
     .expect('Content-Length', '300')
-    .expect('Accept-Range', 'bytes')
-    .expect('Range-Content', 'bytes 0-300/1024')
+    .expect('Accept-Ranges', 'bytes')
+    .expect('Content-Range', 'bytes 0-300/1024')
     .expect(206)
     .end(done);
   });
@@ -51,7 +51,7 @@ describe('range requests', function() {
     request(app.listen())
     .put('/')
     .set('range', 'bytes=0-300')
-    .expect('Accept-Range', 'bytes')
+    .expect('Accept-Ranges', 'bytes')
     .expect(400)
     .end(done);
   });
@@ -60,7 +60,7 @@ describe('range requests', function() {
     request(app.listen())
     .get('/')
     .set('range', 'bytes=400-300')
-    .expect('Accept-Range', 'bytes')
+    .expect('Accept-Ranges', 'bytes')
     .expect(416)
     .end(done);
   });
@@ -74,8 +74,8 @@ describe('range requests with stream', function() {
     .get('/stream')
     .set('range', 'bytes=0-100')
     .expect('Transfer-Encoding', 'chunked')
-    .expect('Accept-Range', 'bytes')
-    .expect('Range-Content', 'bytes 0-100/*')
+    .expect('Accept-Ranges', 'bytes')
+    .expect('Content-Range', 'bytes 0-100/*')
     .expect(206)
     .end(function(err, res) {
       res.text.should.equal(rawFileBuffer.slice(0, 100));
