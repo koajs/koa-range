@@ -5,7 +5,7 @@ var Stream = require('stream');
 
 module.exports = function * (next) {
   var range = this.header['range'];
-  this.set('Accept-Range', 'bytes');
+  this.set('Accept-Ranges', 'bytes');
 
   if (!range) {
     return yield * next;
@@ -52,7 +52,7 @@ module.exports = function * (next) {
     }
   }
 
-  this.set('Range-Content', rangeContentGenerator(start, end, len));
+  this.set('Content-Range', rangeContentGenerator(start, end, len));
   this.status = 206;
 
   if (rawBody instanceof Stream)
