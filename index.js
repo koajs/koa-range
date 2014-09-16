@@ -18,16 +18,16 @@ module.exports = function * (next) {
     return;
   }
 
-  if (ranges && this.method == 'PUT') {
+  if (this.method == 'PUT') {
     this.status = 400;
     return;
   }
 
+  yield * next;
+
   if (this.method != 'GET') {
     return;
   }
-
-  yield * next;
 
   var first = ranges[0];
   var rawBody = this.body;
@@ -47,8 +47,10 @@ module.exports = function * (next) {
       rawBody = rawBody.pipe(slice(start, end));
     } else if (typeof rawBody != 'string') {
       rawBody = new Buffer(JSON.stringify(rawBody));
+      len = rawBody.length;
     } else {
       rawBody = new Buffer(rawBody);
+      len = rawBody.length;
     }
   }
 
