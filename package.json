@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/yorkie/koa-range",
   "devDependencies": {
+    "istanbul-harmony": "^0.3.0",
     "koa": "^0.7.0",
     "koa-route": "^1.1.4",
     "make-lint": "^1.0.1",
