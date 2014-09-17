@@ -5,7 +5,7 @@ test:
 	@NODE_ENV=test ./node_modules/.bin/mocha \
 		--require should \
 		--harmony-generators \
-		test/* \
+		test/*.js \
 		--bail
 
 test-cov:
@@ -14,7 +14,13 @@ test-cov:
 		./node_modules/.bin/_mocha \
 		-- -u exports \
 		--require should \
-		test/* \
+		test/*.js \
 		--bail
 
-.PHONY: test test-cov
+test-travis:
+	node --harmony \
+		./node_modules/.bin/istanbul cover \
+		./node_modules/.bin/_mocha --report lcovonly \
+		-- -R dot test/*.js
+
+.PHONY: test test-cov test-travis

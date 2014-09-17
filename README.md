@@ -1,9 +1,16 @@
 
-koa-range [![Build Status](https://travis-ci.org/yorkie/koa-range.svg?branch=master)](https://travis-ci.org/yorkie/koa-range)
+koa-range
 =================
 range request implementation for koa
 
-[![NPM](https://nodei.co/npm/koa-range.png?stars&downloads)](https://nodei.co/npm/koa-range/) [![NPM](https://nodei.co/npm-dl/koa-range.png)](https://nodei.co/npm/koa-range/)
+[![NPM version][npm-img]][npm-url]
+[![Build status][travis-img]][travis-url]
+[![Test coverage][coveralls-img]][coveralls-url]
+[![License][license-img]][license-url]
+[![Dependency status][david-img]][david-url]
+
+[![NPM](https://nodei.co/npm/koa-range.png?stars&downloads)](https://nodei.co/npm/koa-range/)
+[![NPM](https://nodei.co/npm-dl/koa-range.png)](https://nodei.co/npm/koa-range/)
 
 ### Installation
 
@@ -44,3 +51,14 @@ app.use(route.get('/stream', function * () {
 ### License
 
 MIT
+
+[npm-img]: https://img.shields.io/npm/v/koa-range.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/koa-range
+[travis-img]: https://img.shields.io/travis/yorkie/koa-range.svg?style=flat-square
+[travis-url]: https://travis-ci.org/yorkie/koa-range
+[coveralls-img]: https://img.shields.io/coveralls/yorkie/koa-range.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/yorkie/koa-range?branch=master
+[license-img]: https://img.shields.io/badge/license-MIT-green.svg?style=flat-square
+[license-url]: https://opensource.org/licenses/MIT
+[david-img]: https://img.shields.io/david/yorkie/koa-range.svg?style=flat-square
+[david-url]: https://david-dm.org/yorkie/koa-range
