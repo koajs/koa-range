@@ -4,7 +4,7 @@ var slice = require('stream-slice').slice;
 var Stream = require('stream');
 
 module.exports = function * (next) {
-  var range = this.header['range'];
+  var range = this.header.range;
   this.set('Accept-Ranges', 'bytes');
 
   if (!range) {
@@ -37,14 +37,11 @@ module.exports = function * (next) {
   var firstRange = ranges[0];
   var start = firstRange[0];
   var end = firstRange[1];
-  var args = [start, end].filter(function(item) {
-    return typeof item == 'number';
-  });
 
   if (!Buffer.isBuffer(rawBody)) {
     if (rawBody instanceof Stream.Readable) {
-      len = '*';
-      rawBody = rawBody.pipe(slice(start, end));
+      len = this.length || '*';
+      rawBody = rawBody.pipe(slice(start, end + 1));
     } else if (typeof rawBody != 'string') {
       rawBody = new Buffer(JSON.stringify(rawBody));
       len = rawBody.length;
@@ -54,13 +51,29 @@ module.exports = function * (next) {
     }
   }
 
+  //Adjust infinite end
+  if (end === Infinity) {
+    if (Number.isInteger(len)) {
+      end = len - 1;
+    } else {
+      // FIXME(Calle Svensson): If we don't know how much we can return, we do a normal HTTP 200 repsonse
+      this.status = 200;
+      return;
+    }
+  }
+
+  var args = [start, end+1].filter(function(item) {
+    return typeof item == 'number';
+  });
+
   this.set('Content-Range', rangeContentGenerator(start, end, len));
   this.status = 206;
 
-  if (rawBody instanceof Stream)
+  if (rawBody instanceof Stream) {
     this.body = rawBody;
-  else
+  } else {
     this.body = rawBody.slice.apply(rawBody, args);
+  }
 };
 
 function rangeParse(str) {
@@ -70,10 +83,15 @@ function rangeParse(str) {
   }
   return token[1].split(',')
     .map(function(range) {
-      return range.split('-').map(Number);
+      return range.split('-').map(function(value) {
+        if (value === '') {
+          return Infinity;
+        }
+        return Number(value);
+      });
     })
     .filter(function(range) {
-      return !isNaN(range[0]) && !isNaN(range[1]) && range[0] < range[1];
+      return !isNaN(range[0]) && !isNaN(range[1]) && range[0] <= range[1];
     });
 }
 
