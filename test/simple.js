@@ -57,10 +57,10 @@ describe('range requests', function() {
   it('should return 206 with partial content', function(done) {
     request(app.listen())
     .get('/')
-    .set('range', 'bytes=0-300')
+    .set('range', 'bytes=0-299')
     .expect('Content-Length', '300')
     .expect('Accept-Ranges', 'bytes')
-    .expect('Content-Range', 'bytes 0-300/1024')
+    .expect('Content-Range', 'bytes 0-299/1024')
     .expect(206)
     .end(done);
   });
@@ -68,7 +68,7 @@ describe('range requests', function() {
   it('should return 400 with PUT', function(done) {
     request(app.listen())
     .put('/')
-    .set('range', 'bytes=0-300')
+    .set('range', 'bytes=0-299')
     .expect('Accept-Ranges', 'bytes')
     .expect(400)
     .end(done);
@@ -117,14 +117,26 @@ describe('range requests with stream', function() {
   it('should return 206 with partial content', function(done) {
     request(app.listen())
     .get('/stream')
-    .set('range', 'bytes=0-100')
+    .set('range', 'bytes=0-99')
     .expect('Transfer-Encoding', 'chunked')
     .expect('Accept-Ranges', 'bytes')
-    .expect('Content-Range', 'bytes 0-100/*')
+    .expect('Content-Range', 'bytes 0-99/*')
     .expect(206)
     .end(function(err, res) {
       should.not.exist(err);
       res.text.should.equal(rawFileBuffer.slice(0, 100));
+      done();
+    });
+  });
+
+  it('should return 206 with open ended range', function(done) {
+    request(app.listen())
+    .get('/stream')
+    .set('range', 'bytes=0-')
+    .expect(200)
+    .end(function(err, res) {
+      should.not.exist(err);
+      res.text.should.startWith(rawFileBuffer.slice(0, 300));
       done();
     });
   });
@@ -142,10 +154,26 @@ describe('range requests with json', function() {
     .expect(206)
     .end(function(err, res) {
       should.not.exist(err);
-      res.text.should.equal('{"foo');
+      res.text.should.equal('{"foo"');
       done();
     });
   });
+
+  it('should return 206 with single byte range', function(done) {
+    request(app.listen())
+    .get('/json')
+    .set('range', 'bytes=2-2')
+    .expect('Accept-Ranges', 'bytes')
+    .expect('Content-Range', 'bytes 2-2/13')
+    .expect(206)
+    .end(function(err, res) {
+      should.not.exist(err);
+      res.text.should.equal('f');
+      done();
+    });
+  });
+
+
 
 });
 
@@ -160,7 +188,21 @@ describe('range requests with string', function() {
     .expect(206)
     .end(function(err, res) {
       should.not.exist(err);
-      res.text.should.equal('koa-r');
+      res.text.should.equal('koa-ra');
+      done();
+    });
+  });
+
+  it('should return 206 with open ended range', function(done) {
+    request(app.listen())
+    .get('/string')
+    .set('range', 'bytes=3-')
+    .expect('Accept-Ranges', 'bytes')
+    .expect('Content-Range', 'bytes 3-8/9')
+    .expect(206)
+    .end(function(err, res) {
+      should.not.exist(err);
+      res.text.should.equal('-range');
       done();
     });
   });
