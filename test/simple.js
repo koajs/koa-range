@@ -133,6 +133,7 @@ describe('range requests with stream', function() {
     request(app.listen())
     .get('/stream')
     .set('range', 'bytes=0-')
+    .expect('Transfer-Encoding', 'chunked')
     .expect(200)
     .end(function(err, res) {
       should.not.exist(err);
@@ -151,6 +152,7 @@ describe('range requests with json', function() {
     .set('range', 'bytes=0-5')
     .expect('Accept-Ranges', 'bytes')
     .expect('Content-Range', 'bytes 0-5/13')
+    .expect('Content-Length', '6')
     .expect(206)
     .end(function(err, res) {
       should.not.exist(err);
@@ -165,6 +167,7 @@ describe('range requests with json', function() {
     .set('range', 'bytes=2-2')
     .expect('Accept-Ranges', 'bytes')
     .expect('Content-Range', 'bytes 2-2/13')
+    .expect('Content-Length', '1')
     .expect(206)
     .end(function(err, res) {
       should.not.exist(err);
@@ -185,6 +188,7 @@ describe('range requests with string', function() {
     .set('range', 'bytes=0-5')
     .expect('Accept-Ranges', 'bytes')
     .expect('Content-Range', 'bytes 0-5/9')
+    .expect('Content-Length', '6')
     .expect(206)
     .end(function(err, res) {
       should.not.exist(err);
@@ -199,6 +203,7 @@ describe('range requests with string', function() {
     .set('range', 'bytes=3-')
     .expect('Accept-Ranges', 'bytes')
     .expect('Content-Range', 'bytes 3-8/9')
+    .expect('Content-Length', '6')
     .expect(206)
     .end(function(err, res) {
       should.not.exist(err);

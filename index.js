@@ -74,6 +74,10 @@ module.exports = function * (next) {
   } else {
     this.body = rawBody.slice.apply(rawBody, args);
   }
+
+  if(len !== '*') {
+    this.length = end - start + 1;
+  }
 };
 
 function rangeParse(str) {
