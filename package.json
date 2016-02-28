@@ -22,15 +22,15 @@
   },
   "homepage": "https://github.com/yorkie/koa-range",
   "devDependencies": {
-    "istanbul-harmony": "^0.3.0",
-    "koa": "^0.7.0",
-    "koa-route": "^1.1.4",
+    "istanbul": "^0.4.2",
+    "koa": "^1.1.2",
+    "koa-route": "^2.4.2",
     "make-lint": "^1.0.1",
-    "mocha": "^1.20.1",
-    "should": "^4.0.1",
+    "mocha": "^2.4.5",
+    "should": "^8.2.2",
     "supertest": "^0.13.0"
   },
   "dependencies": {
-    "stream-slice": "^0.1.0"
+    "stream-slice": "^0.1.2"
   }
 }
