@@ -26,6 +26,10 @@ app.use(route.get('/string', function * () {
 app.use(route.get('/stream', function * () {
   this.body = fs.createReadStream('./README.md');
 }));
+app.use(route.get('/empty', function * () {
+  this.body = undefined;
+  this.status = 304;
+}));
 
 app.on('error', function(err) {
   throw err;
@@ -172,9 +176,6 @@ describe('range requests with json', function() {
       done();
     });
   });
-
-
-
 });
 
 describe('range requests with string', function() {
@@ -206,5 +207,17 @@ describe('range requests with string', function() {
       done();
     });
   });
+});
 
+describe('range requests with empty body', function() {
+  it('should return 304', function(done) {
+    request(app.listen())
+    .get('/empty')
+    .set('range', 'bytes=1-')
+    .expect(304)
+    .end(function(err, res) {
+      should.not.exist(err);
+      done();
+    });
+  });
 });

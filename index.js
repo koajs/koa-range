@@ -25,7 +25,8 @@ module.exports = function * (next) {
 
   yield * next;
 
-  if (this.method != 'GET') {
+  if (this.method != 'GET' ||
+     this.body == null) {
     return;
   }
 
@@ -42,7 +43,7 @@ module.exports = function * (next) {
     if (rawBody instanceof Stream.Readable) {
       len = this.length || '*';
       rawBody = rawBody.pipe(slice(start, end + 1));
-    } else if (typeof rawBody != 'string') {
+    } else if (typeof rawBody !== 'string') {
       rawBody = new Buffer(JSON.stringify(rawBody));
       len = rawBody.length;
     } else {
