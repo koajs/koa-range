@@ -76,7 +76,7 @@ module.exports = function * (next) {
     this.body = rawBody.slice.apply(rawBody, args);
   }
 
-  if(len !== '*') {
+  if (len !== '*') {
     this.length = end - start + 1;
   }
 };
