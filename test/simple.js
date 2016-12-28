@@ -4,31 +4,31 @@ var request = require('supertest');
 var should = require('should');
 var route = require('koa-route');
 var range = require('../');
-var koa = require('koa');
-var app = koa();
+var Koa = require('koa');
+var app = new Koa();
 
 var rawbody = new Buffer(1024);
 var rawFileBuffer = fs.readFileSync('./README.md') + '';
 
 app.use(range);
-app.use(route.get('/', function * () {
-  this.body = rawbody;
+app.use(route.get('/', async function(ctx) {
+  ctx.body = rawbody;
 }));
-app.use(route.post('/', function * () {
-  this.status = 200;
+app.use(route.post('/', async function(ctx) {
+  ctx.status = 200;
 }));
-app.use(route.get('/json', function * () {
-  this.body = {foo:'bar'};
+app.use(route.get('/json', async function(ctx) {
+  ctx.body = {foo:'bar'};
 }));
-app.use(route.get('/string', function * () {
-  this.body = 'koa-range';
+app.use(route.get('/string', async function(ctx) {
+  ctx.body = 'koa-range';
 }));
-app.use(route.get('/stream', function * () {
-  this.body = fs.createReadStream('./README.md');
+app.use(route.get('/stream', async function(ctx) {
+  ctx.body = fs.createReadStream('./README.md');
 }));
-app.use(route.get('/empty', function * () {
-  this.body = undefined;
-  this.status = 304;
+app.use(route.get('/empty', async function(ctx) {
+  ctx.body = undefined;
+  ctx.status = 304;
 }));
 
 app.on('error', function(err) {
