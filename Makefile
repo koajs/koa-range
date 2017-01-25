@@ -5,13 +5,13 @@ test:
 	@NODE_ENV=test ./node_modules/.bin/mocha \
 		--require should \
 		--harmony \
-    --harmony-async-await \
+		--harmony-async-await \
 		test/*.js \
 		--bail
 
 test-cov:
 	@NODE_ENV=test node --harmony \
-    --harmony-async-await \
+		--harmony-async-await \
 		./node_modules/.bin/istanbul cover \
 		./node_modules/.bin/_mocha \
 		-- -u exports \
@@ -21,7 +21,7 @@ test-cov:
 
 test-travis:
 	node --harmony \
-    --harmony-async-await \
+		--harmony-async-await \
 		./node_modules/.bin/istanbul cover \
 		./node_modules/.bin/_mocha --report lcovonly \
 		-- -R dot test/*.js
