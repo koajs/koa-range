@@ -48,7 +48,9 @@ app.use(route.get('/stream', async function (ctx) {
 
 ```
 
-Until async/await is supported by default, you will need to transpile your code with something like Babel, or use Node v7 with the `--harmony-async-await` flag.
+Until async/await is supported by default, you will need to do one of the following:
+- Transpile your code with somehting like Babel
+- Use node v7 with --harmony-async-await flag
 
 ### License
 
