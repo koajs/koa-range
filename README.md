@@ -18,35 +18,39 @@ range request implementation for koa
 $ npm install koa-range
 ```
 
-### Usage
+### Usage (with koa@2)
 
 ```js
 var fs = require('fs');
 var range = require('koa-range');
 var route = require('koa-route');
-var koa = require('koa');
-var app = koa();
+var Koa = require('koa');
+var app = new Koa();
 
 app.use(range);
 
 // via buffer
-app.use(route.get('/', function * () {
-  this.body = new Buffer(100);
+app.use(route.get('/', async function (ctx) {
+  ctx.body = new Buffer(100);
 }));
 
 // via object
-app.use(route.get('/json', function * () {
-  this.body = {
+app.use(route.get('/json', async function (ctx) {
+  ctx.body = {
     'foo': 'bar'
   };
 }));
 
 // via readable stream
-app.use(route.get('/stream', function * () {
-  this.body = fs.createReadStream('your path');
+app.use(route.get('/stream', async function (ctx) {
+  ctx.body = fs.createReadStream('your path');
 }));
 
 ```
+
+Until async/await is supported by default, you will need to do one of the following:
+- Transpile your code with somehting like Babel
+- Use node v7 with --harmony-async-await flag
 
 ### License
 

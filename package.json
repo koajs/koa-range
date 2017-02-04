@@ -1,6 +1,6 @@
 {
   "name": "koa-range",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "range request implementation for koa",
   "main": "index.js",
   "scripts": {
@@ -22,9 +22,9 @@
   },
   "homepage": "https://github.com/yorkie/koa-range",
   "devDependencies": {
-    "istanbul": "^0.4.2",
-    "koa": "^1.1.2",
-    "koa-route": "^2.4.2",
+    "istanbul": "^1.1.0-alpha.1",
+    "koa": "^2.0.0",
+    "koa-route": "^3.2.0",
     "make-lint": "^1.0.1",
     "mocha": "^2.4.5",
     "should": "^8.2.2",
@@ -32,5 +32,8 @@
   },
   "dependencies": {
     "stream-slice": "^0.1.2"
+  },
+  "engines" : {
+    "node" : ">=7"
   }
 }
