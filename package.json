@@ -1,6 +1,6 @@
 {
   "name": "koa-range",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "range request implementation for koa",
   "main": "index.js",
   "scripts": {
@@ -32,5 +32,8 @@
   },
   "dependencies": {
     "stream-slice": "^0.1.2"
+  },
+  "publishConfig": {
+    "tag": "release-0.2"
   }
 }
