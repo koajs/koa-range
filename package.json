@@ -33,7 +33,7 @@
   "dependencies": {
     "stream-slice": "^0.1.2"
   },
-  "engines" : {
-    "node" : ">=7"
+  "engines": {
+    "node": ">=7"
   }
 }

@@ -52,7 +52,7 @@ module.exports = async function (ctx, next) {
     }
   }
 
-  //Adjust infinite end
+  // Adjust infinite end
   if (end === Infinity) {
     if (Number.isInteger(len)) {
       end = len - 1;
@@ -61,6 +61,11 @@ module.exports = async function (ctx, next) {
       ctx.status = 200;
       return;
     }
+  }
+
+  // Adjust end while larger than len
+  if (Number.isInteger(len) && end >= len) {
+    end = len - 1;
   }
 
   var args = [start, end+1].filter(function(item) {

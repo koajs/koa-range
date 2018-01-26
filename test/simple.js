@@ -69,6 +69,17 @@ describe('range requests', function() {
     .end(done);
   });
 
+  it('should return 200 with range larger than total length', function(done) {
+    request(app.listen())
+    .get('/')
+    .set('range', 'bytes=0-1024') // 1025 bytes in total > 1024
+    .expect('Content-Length', '1024')
+    .expect('Accept-Ranges', 'bytes')
+    .expect('Content-Range', 'bytes 0-1023/1024')
+    .expect(206)
+    .end(done);
+  });
+
   it('should return 400 with PUT', function(done) {
     request(app.listen())
     .put('/')
