@@ -63,9 +63,13 @@ module.exports = async function (ctx, next) {
     }
   }
 
+  ctx.status = 206;
   // Adjust end while larger than len
   if (Number.isInteger(len) && end >= len) {
     end = len - 1;
+    if (start === 0) {
+      ctx.status = 200;
+    }
   }
 
   var args = [start, end+1].filter(function(item) {
@@ -73,7 +77,6 @@ module.exports = async function (ctx, next) {
   });
 
   ctx.set('Content-Range', rangeContentGenerator(start, end, len));
-  ctx.status = 206;
 
   if (rawBody instanceof Stream) {
     ctx.body = rawBody;
