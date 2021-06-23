@@ -42,6 +42,12 @@ module.exports = async function (ctx, next) {
   if (!Buffer.isBuffer(rawBody)) {
     if (rawBody instanceof Stream.Readable) {
       len = ctx.length || '*';
+
+if(end === Infinity && !Number.isInteger(len)){
+return
+
+}
+
       rawBody = rawBody.pipe(slice(start, end + 1));
     } else if (typeof rawBody !== 'string') {
       rawBody = new Buffer(JSON.stringify(rawBody));
