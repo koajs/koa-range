@@ -1,11 +1,21 @@
-
 var util = require('util');
 var slice = require('stream-slice').slice;
 var Stream = require('stream');
 
-const fs = require("fs");
+const fs = require('fs');
 
-const stat = util.promisify(fs.stat);
+
+function stat (path) {
+  return new Promise(function (resolve, reject) {
+    fs.stat(path, function (err, stats) {
+      if (err)
+        reject(err);
+      else
+        resolve(stats);
+    })
+  })
+}
+
 
 module.exports = async function (ctx, next) {
   var range = ctx.header.range;
@@ -44,11 +54,9 @@ module.exports = async function (ctx, next) {
   var end = firstRange[1];
 
   if (!Buffer.isBuffer(rawBody)) {
+
     if (rawBody instanceof Stream.Readable) {
       len = ctx.length || '*';
-
-
-
 
       if (rawBody.path) {
         let path = rawBody.path;
@@ -57,6 +65,7 @@ module.exports = async function (ctx, next) {
 
           len = stats.size;
         }
+
         rawBody = fs.createReadStream(rawBody.path, {
           start,
           end: end,
@@ -67,7 +76,6 @@ module.exports = async function (ctx, next) {
         }
         rawBody = rawBody.pipe(slice(start, end + 1));
       }
-
 
       
     } else if (typeof rawBody !== 'string') {
