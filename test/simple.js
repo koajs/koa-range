@@ -122,9 +122,8 @@ describe('range requests with stream', function() {
     request(app.listen())
     .get('/stream')
     .set('range', 'bytes=0-99')
-    .expect('Transfer-Encoding', 'chunked')
     .expect('Accept-Ranges', 'bytes')
-    .expect('Content-Range', 'bytes 0-99/*')
+    .expect('Content-Range', 'bytes 0-99/' + rawFileBuffer.length)
     .expect(206)
     .end(function(err, res) {
       should.not.exist(err);
@@ -137,8 +136,8 @@ describe('range requests with stream', function() {
     request(app.listen())
     .get('/stream')
     .set('range', 'bytes=0-')
-    .expect('Transfer-Encoding', 'chunked')
-    .expect(200)
+    .expect(206)
+    .expect('Content-Range', 'bytes 0-1903/' + rawFileBuffer.length)
     .end(function(err, res) {
       should.not.exist(err);
       res.text.should.startWith(rawFileBuffer.slice(0, 300));
