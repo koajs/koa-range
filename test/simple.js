@@ -69,6 +69,28 @@ describe('range requests', function() {
     .end(done);
   });
 
+  it('should return 200 when using oversized end', function(done) {
+    request(app.listen())
+    .get('/')
+    .set('range', 'bytes=0-1024') // 1025 bytes in total > 1024
+    .expect('Content-Length', '1024')
+    .expect('Accept-Ranges', 'bytes')
+    .expect('Content-Range', 'bytes 0-1023/1024')
+    .expect(200)
+    .end(done);
+  });
+
+  it('should return 206 with partial content when using oversized end', function(done) {
+    request(app.listen())
+    .get('/')
+    .set('range', 'bytes=1000-1024')
+    .expect('Content-Length', '24')
+    .expect('Accept-Ranges', 'bytes')
+    .expect('Content-Range', 'bytes 1000-1023/1024')
+    .expect(206)
+    .end(done);
+  });
+
   it('should return 400 with PUT', function(done) {
     request(app.listen())
     .put('/')
