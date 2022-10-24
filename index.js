@@ -111,9 +111,16 @@ module.exports = async function (ctx, next) {
     ctx.body = rawBody.slice.apply(rawBody, args);
   }
 
-  if (len !== '*') {
-    ctx.length = end - start + 1;
-  }
+ 
+    if (len !== "*") {
+        let ctxlength = end - start + 1;
+        if (ctxlength <= 0) {
+            ctx.status = 416;
+        }
+
+        ctx.length = Math.max(0, ctxlength);
+    }
+
 };
 
 function rangeParse(str) {
