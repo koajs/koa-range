@@ -38,7 +38,7 @@ module.exports = async function (ctx, next) {
   }
 
   await next();
-
+ if (ctx.response.has('Content-Range')) { return }
   if (ctx.method != 'GET' ||
      ctx.body == null) {
     return;
