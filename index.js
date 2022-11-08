@@ -7,7 +7,9 @@ const fs            = require('fs');
 const isPreconditionFailure = require('./is-precondition-failure');
 const mime          = require('mime');
 const parseHttpDate = require('./parse-http-date');
-const parseRange    = require('range-parser');
+// TODO: I would much prefer to use the range-parser npm module but my PR is not getting any attention.
+// might be a dead project: https://github.com/jshttp/range-parser/pull/25
+const parseRange    = require('./range-parser');
 const pump          = require('pump');
 const rangeStream   = require('range-stream');
 const sbuff         = require('./buffer-stream'); 
