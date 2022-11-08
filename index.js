@@ -2,13 +2,15 @@
 
 const error         = require('./error');
 const etag          = require('etag');
-const fresh         = require('fresh');
+// TODO: I would much prefer to use the fresh npm module but my PR is not getting any attention.
+// seems to be a dead project.  https://github.com/jshttp/fresh/pull/34
+const fresh         = require('./fresh');
 const fs            = require('fs');
 const isPreconditionFailure = require('./is-precondition-failure');
 const mime          = require('mime');
 const parseHttpDate = require('./parse-http-date');
 // TODO: I would much prefer to use the range-parser npm module but my PR is not getting any attention.
-// might be a dead project: https://github.com/jshttp/range-parser/pull/25
+// seems to be a dead project.  https://github.com/jshttp/range-parser/pull/25
 const parseRange    = require('./range-parser');
 const pump          = require('pump');
 const rangeStream   = require('range-stream');
